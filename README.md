@@ -1,4 +1,4 @@
-<img width="50%" style="display: block; margin: 0 auto" src="logo.png">
+<p align="center"><img src="logo.png"></p>
 <h1 style="text-align: center">Arch-Setup - Arch linux installer</h1>
 
 ## Description
