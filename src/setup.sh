@@ -95,34 +95,34 @@ function confirm_choices {
 }
 
 function sync_repositories {
-    pacman -Sy > /dev/null 2>&1
-    reflector -c Norway -a 6 --sort rate --save /etc/pacman.d/mirrorlist
+	pacman -Sy > /dev/null 2>&1
+	reflector -c Norway -a 6 --sort rate --save /etc/pacman.d/mirrorlist
 }
 
 function partition_disk {
-    parted $1 mklabel gpt
-    parted $1 mkpart fat32 1MiB 301MiB set 1 esp on
-    parted $1 mkpart ext4 301MiB 100%
+	parted $1 mklabel gpt
+	parted $1 mkpart fat32 1MiB 301MiB set 1 esp on
+	parted $1 mkpart ext4 301MiB 100%
 }
 
 function disk_setup {
-    target_disk="$1"
-    boot_partition="${target_disk}1"
-    root_partition="${target_disk}2"
-    encryption_key="$2"
-    luks_partition="/dev/mapper/cryptroot"
-    
-    exec_wrapper "wipefs -a $target_disk" "wiping old partitions"
-    exec_wrapper "partition_disk $target_disk" "creating partitions"
-    exec_wrapper "echo -n "$encryption_key" | cryptsetup luksFormat $root_partition -" "encrypting root partition"
-    exec_wrapper "echo -n "$encryption_key" | cryptsetup luksOpen $root_partition cryptroot -" "mounting encrypted partition"
-    exec_wrapper "mkfs.fat -F32 -n BOOT $boot_partition; mkfs.ext4 $luks_partition" "formatting partitions"
-    exec_wrapper "mount $luks_partition /mnt; mkdir /mnt/boot; mount $boot_partition /mnt/boot" "mounting partitions"
+	target_disk="$1"
+	boot_partition="${target_disk}1"
+	root_partition="${target_disk}2"
+	encryption_key="$2"
+	luks_partition="/dev/mapper/cryptroot"
+	
+	exec_wrapper "wipefs -a $target_disk" "wiping old partitions"
+	exec_wrapper "partition_disk $target_disk" "creating partitions"
+	exec_wrapper "echo -n "$encryption_key" | cryptsetup luksFormat $root_partition -" "encrypting root partition"
+	exec_wrapper "echo -n "$encryption_key" | cryptsetup luksOpen $root_partition cryptroot -" "mounting encrypted partition"
+	exec_wrapper "mkfs.fat -F32 -n BOOT $boot_partition; mkfs.ext4 $luks_partition" "formatting partitions"
+	exec_wrapper "mount $luks_partition /mnt; mkdir /mnt/boot; mount $boot_partition /mnt/boot" "mounting partitions"
 }
 
 function pacstrap_packages {
-    packages=$(cat $(dirname ${0})/packages | tr -s '\n' ' ')
-    exec_wrapper "pacstrap /mnt $packages" "installing base packages"
+	packages=$(cat $(dirname ${0})/packages | tr -s '\n' ' ')
+	exec_wrapper "pacstrap /mnt $packages" "installing base packages"
 }
 
 function configure_system {
@@ -138,7 +138,7 @@ function configure_system {
 
 function main {
 	if [ ! -z $(ping -c 1 google.com 2>&1 >/dev/null) ]; then
-	    printf "  \033[31m[!]\033[0m Unable to connect to internet\n"
+		printf "  \033[31m[!]\033[0m Unable to connect to internet\n"
 	fi
 	
 	target_disk=$(choose_install_disk)
