@@ -1,5 +1,5 @@
 <p align="center"><img src="logo.png"></p>
-<h1 style="text-align: center">Arch-Setup - Arch linux installer</h1>
+<h1 align="center">Arch-Setup - Arch linux installer</h1>
 
 ## Description
 Arch-Setup is a simple arch linux installer to automate the reinstalling
