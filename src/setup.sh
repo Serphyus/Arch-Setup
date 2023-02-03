@@ -143,10 +143,6 @@ function configure_system {
 }
 
 function main {
-	if [ ! -z $(ping -c 1 google.com 2>&1 >/dev/null) ]; then
-		printf "  \033[31m[!]\033[0m Unable to connect to internet\n"
-	fi
-	
 	target_disk=$(choose_install_disk)
 	encryption_key=$(choose_encryption_key)
 	username=$(choose_username)
