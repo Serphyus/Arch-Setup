@@ -112,7 +112,7 @@ function disk_setup {
 	exec_wrapper "wipefs -a $target_disk" "wiping old partitions"
 	exec_wrapper "partition_disk $target_disk" "creating partitions"
 	
-	partitions=($(ls $target_disk))
+	partitions=($(ls $target_disk*))
 	boot_partition="${partitions[1]}"
 	root_partition="${partitions[2]}"
 	luks_partition="/dev/mapper/cryptroot"
