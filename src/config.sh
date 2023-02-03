@@ -44,8 +44,6 @@ function setup_mkinitcpio {
 }
 
 function setup_bootloader {
-	root_uuid=$(blkid -o value -s UUID $1)
-
 	bootctl --path=/boot install
 
 	echo "default arch" > /boot/loader/loader.conf
@@ -54,7 +52,7 @@ function setup_bootloader {
 	echo "title Arch Linux" > /boot/loader/entries/arch.conf
 	echo "linux /vmlinuz-linux" >> /boot/loader/entries/arch.conf
 	echo "initrd /initramfs-linux.img" >> /boot/loader/entries/arch.conf
-	echo "options cryptdevice=UUID=$root_uuid:cryptroot root=/dev/mapper/cryptroot quiet rw" >> /boot/loader/entries/arch.conf
+	echo "options cryptdevice=$1:cryptroot root=/dev/mapper/cryptroot quiet rw" >> /boot/loader/entries/arch.conf
 }
 
 function enable_services {

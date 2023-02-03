@@ -107,13 +107,16 @@ function partition_disk {
 
 function disk_setup {
 	target_disk="$1"
-	boot_partition="${target_disk}1"
-	root_partition="${target_disk}2"
 	encryption_key="$2"
-	luks_partition="/dev/mapper/cryptroot"
 	
 	exec_wrapper "wipefs -a $target_disk" "wiping old partitions"
 	exec_wrapper "partition_disk $target_disk" "creating partitions"
+	
+	partitions=($(ls $target_disk*))
+	boot_partition="${partitions[1]}"
+	root_partition="${partitions[2]}"
+	luks_partition="/dev/mapper/cryptroot"
+	
 	exec_wrapper "echo -n "$encryption_key" | cryptsetup luksFormat $root_partition -" "encrypting root partition"
 	exec_wrapper "echo -n "$encryption_key" | cryptsetup luksOpen $root_partition cryptroot -" "mounting encrypted partition"
 	exec_wrapper "mkfs.fat -F32 -n BOOT $boot_partition; mkfs.ext4 $luks_partition" "formatting partitions"
@@ -128,19 +131,18 @@ function pacstrap_packages {
 function configure_system {
 	current_dir=$(dirname ${0})
 	
+	partitions=($(ls $1*))
+	root_partition="${partitions[2]}"
+
 	cp $current_dir/config.sh /mnt/config.sh
 	chmod +x $current_dir/config.sh
 	
-	arch-chroot /mnt /bin/bash -c "/config.sh \"${1}2\" \"$2\" \"$3\" \"$4\""
+	arch-chroot /mnt /bin/bash -c "/config.sh \"$root_partition\" \"$2\" \"$3\" \"$4\""
 	
 	rm -rf /mnt/config.sh
 }
 
 function main {
-	if [ ! -z $(ping -c 1 google.com 2>&1 >/dev/null) ]; then
-		printf "  \033[31m[!]\033[0m Unable to connect to internet\n"
-	fi
-	
 	target_disk=$(choose_install_disk)
 	encryption_key=$(choose_encryption_key)
 	username=$(choose_username)
