@@ -131,10 +131,13 @@ function pacstrap_packages {
 function configure_system {
 	current_dir=$(dirname ${0})
 	
+	partitions=($(ls $1*))
+	root_partition="${partitions[2]}"
+
 	cp $current_dir/config.sh /mnt/config.sh
 	chmod +x $current_dir/config.sh
 	
-	arch-chroot /mnt /bin/bash -c "/config.sh \"${1}2\" \"$2\" \"$3\" \"$4\""
+	arch-chroot /mnt /bin/bash -c "/config.sh \"$root_partition\" \"$2\" \"$3\" \"$4\""
 	
 	rm -rf /mnt/config.sh
 }
