@@ -107,13 +107,16 @@ function partition_disk {
 
 function disk_setup {
 	target_disk="$1"
-	boot_partition="${target_disk}1"
-	root_partition="${target_disk}2"
 	encryption_key="$2"
-	luks_partition="/dev/mapper/cryptroot"
 	
 	exec_wrapper "wipefs -a $target_disk" "wiping old partitions"
 	exec_wrapper "partition_disk $target_disk" "creating partitions"
+	
+	partitions=($(ls $target_disk))
+	boot_partition="${partitions[1]}"
+	root_partition="${partitions[2]}"
+	luks_partition="/dev/mapper/cryptroot"
+	
 	exec_wrapper "echo -n "$encryption_key" | cryptsetup luksFormat $root_partition -" "encrypting root partition"
 	exec_wrapper "echo -n "$encryption_key" | cryptsetup luksOpen $root_partition cryptroot -" "mounting encrypted partition"
 	exec_wrapper "mkfs.fat -F32 -n BOOT $boot_partition; mkfs.ext4 $luks_partition" "formatting partitions"
