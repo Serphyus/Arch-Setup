@@ -101,8 +101,8 @@ function sync_repositories {
 
 function partition_disk {
 	parted $1 mklabel gpt
-	parted $1 mkpart fat32 1MiB 301MiB set 1 esp on
-	parted $1 mkpart ext4 301MiB 100%
+	parted $1 mkpart fat32 1MiB 513MiB set 1 esp on
+	parted $1 mkpart ext4 513MiB 100%
 }
 
 function disk_setup {
