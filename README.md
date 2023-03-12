@@ -10,8 +10,8 @@ The bootctl config will automatically boot into the arch system without
 any prompt. This can be changed in the `/boot/loader/entries/arch.conf`.
 
 ## Requirements
-- EFI System
-	- Due to the installer using bootctl as bootloader instead of grub the installer only supports EFI compatible systems
+- EFI Support
+	- Due to the installer using bootctl as bootloader the system must have EFI support
 
 ## Usage
 ```bash
