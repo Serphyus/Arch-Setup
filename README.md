@@ -15,8 +15,7 @@ any prompt. This can be changed in the `/boot/loader/entries/arch.conf`.
 
 ## Usage
 ```bash
-git clone https://github.com/Serphyus/Arch-Setup.git
-cd Arch-Setup
-chmod +x src/*.sh
-./src/setup.sh
+curl https://raw.githubusercontent.com/Serphyus/Arch-Setup/master/src/run.sh > run.sh
+chmod +x run.sh
+./run.sh
 ```
