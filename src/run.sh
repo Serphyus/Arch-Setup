@@ -7,7 +7,7 @@ curl https://raw.githubusercontent.com/Serphyus/Arch-Setup/master/src/setup.sh -
 curl https://raw.githubusercontent.com/Serphyus/Arch-Setup/master/src/config.sh -o config.sh
 curl https://raw.githubusercontent.com/Serphyus/Arch-Setup/master/src/packages -o packages
 
-chmod +x ./*.sh
+chmod +x $TMP_DIR/*.sh
 
 $TMP_DIR/setup.sh
 rm -rf $TMP_DIR
