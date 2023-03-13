@@ -1,5 +1,5 @@
 function sync_repositories {
-	pacman -Syu > /dev/null 2>&1
+	pacman -Sy
 	reflector -c Norway -a 6 --sort rate --save /etc/pacman.d/mirrorlist
 }
 
@@ -34,13 +34,13 @@ function setup_users {
 	useradd -mG wheel $username
 	echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
 
-	echo -e "$password\n$password" | passwd           > /dev/null 2>&1
-	echo -e "$password\n$password" | passwd $username > /dev/null 2>&1
+	echo -e "$password\n$password" | passwd
+	echo -e "$password\n$password" | passwd $username
 }
 
 function setup_mkinitcpio {
 	sed -i "s/HOOKS=(.*/HOOKS=(base udev autodetect keyboard keymap modconf block encrypt filesystems fsck)/" /etc/mkinitcpio.conf
-	mkinitcpio -p linux > /dev/null 2>&1
+	mkinitcpio -p linux
 }
 
 function setup_bootloader {
@@ -56,16 +56,16 @@ function setup_bootloader {
 }
 
 function enable_services {
-	systemctl enable NetworkManager     > /dev/null 2>&1
-	systemctl enable bluetooth          > /dev/null 2>&1
-	systemctl enable cups.service       > /dev/null 2>&1
-	systemctl enable avahi-daemon       > /dev/null 2>&1
-	systemctl enable tlp                > /dev/null 2>&1
-	systemctl enable acpid              > /dev/null 2>&1
-	systemctl enable reflector.timer    > /dev/null 2>&1
-	systemctl enable fstrim.timer       > /dev/null 2>&1
-	systemctl enable libvirtd           > /dev/null 2>&1
-	systemctl enable firewalld          > /dev/null 2>&1
+	systemctl enable NetworkManager
+	systemctl enable bluetooth
+	systemctl enable cups.service
+	systemctl enable avahi-daemon
+	systemctl enable tlp
+	systemctl enable acpid
+	systemctl enable reflector.timer
+	systemctl enable fstrim.timer
+	systemctl enable libvirtd
+	systemctl enable firewalld
 }
 
 root_partition="$1"
