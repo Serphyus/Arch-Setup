@@ -56,3 +56,5 @@ acpid
 os-prober
 ntfs-3g
 wget
+socat
+upower
