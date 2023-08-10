@@ -84,7 +84,7 @@ function choose_password {
 }
 
 function confirm_choices {
-	menu="whiptail --title \"User Confirmation\" --yesno \"$1\" 7 65"
+	menu="whiptail --title \"User Confirmation\" --yesno \"$1\" 9 65"
 	if ! ( eval $menu ); then
 		exit 0
 	fi
@@ -145,7 +145,7 @@ function main {
 	hostname=$(choose_hostname)
 	password=$(choose_password)
 
-    context_menu="Username -> $hostname"
+    context_menu="Username -> $username"
     context_menu="$context_menu\nHostname -> $hostname"
     context_menu="$context_menu\nTarget disk -> $target_disk"
 
