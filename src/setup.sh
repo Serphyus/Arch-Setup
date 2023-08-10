@@ -149,7 +149,7 @@ function main {
     context_menu="$context_menu\nHostname -> $hostname"
     context_menu="$context_menu\nTarget disk -> $target_disk"
 
-	confirm_choices $context_menu
+	confirm_choices "$context_menu"
 
 	clear
 	show_logo
