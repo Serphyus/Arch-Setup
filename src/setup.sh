@@ -149,7 +149,7 @@ function main {
 	hostname=$(choose_hostname)
 	password=$(choose_password)
 
-	confirm_choices "Install arch linux -> $target_disk"
+	confirm_choices "Username -> $hostname" "Hostname -> $hostname" "Target disk -> $target_disk"
 
 	clear
 	show_logo
