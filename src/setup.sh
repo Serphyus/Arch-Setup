@@ -145,9 +145,9 @@ function main {
 	hostname=$(choose_hostname)
 	password=$(choose_password)
 
-    context_menu="${context_menu}Username : $username\n"
-    context_menu="${context_menu}Hostname : $hostname\n"
-    context_menu="${context_menu}Disk dev : $target_disk"
+	context_menu="${context_menu}Username : $username\n"
+	context_menu="${context_menu}Hostname : $hostname\n"
+	context_menu="${context_menu}Disk dev : $target_disk"
 
 	confirm_choices "$context_menu"
 
