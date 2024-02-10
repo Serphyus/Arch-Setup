@@ -68,6 +68,10 @@ function enable_services {
 	systemctl enable firewalld
 }
 
+function disable_bios_sound {
+    echo "blacklist pcspkr" | tee -a /etc/modprobe.d/blacklist.conf
+}
+
 root_partition="$1"
 username="$2"
 hostname="$3"
@@ -83,3 +87,4 @@ install_packages
 setup_mkinitcpio
 setup_bootloader $root_partition
 enable_services
+disable_bios_sound
